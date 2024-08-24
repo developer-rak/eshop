@@ -1,13 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 
-import Footer from './components/footer/Footer';
-import Header from './components/header/Header';
-import Admin from './pages/admin/Admin';
-import Cart from './pages/cart/Cart';
-import Contact from './pages/contact/Contact';
-import Home from './pages/home/Home';
-import OrderHistory from './pages/orderHistory/OrderHistory';
+import { Header, Footer } from "./components";
+import { Home, Admin, Cart, Contact, OrderHistory } from "./pages";
 
 function App() {
   return (
