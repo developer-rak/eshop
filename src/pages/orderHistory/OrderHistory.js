@@ -4,9 +4,9 @@ import "./OrderHistory.scss";
 const OrderHistory = () => {
   return (
     <div className='orderHistory'>
-      OrderHistory
+      <h1>OrderHistory</h1>
     </div>
   )
 }
 
-export default OrderHistory
+export default OrderHistory;
