@@ -101,7 +101,7 @@ const Header = () => {
               Register
             </NavLink>
             <NavLink 
-              to="/order-history" 
+              to="/orderhistory"
               className={activeLink}
             >
               My Orders

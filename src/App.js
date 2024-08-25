@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.scss';
 
 import { Header, Footer } from "./components";
-import { Home, Admin, Cart, Contact, OrderHistory } from "./pages";
+import { Admin, Home, Contact, Login, Register, OrderHistory, Cart, Reset } from "./pages";
 
 function App() {
   return (
@@ -11,10 +11,13 @@ function App() {
         <Header />
           <Routes>
             <Route path='/' element={ <Home /> } />
-            <Route path='/admin' element={ <Admin /> } />
             <Route path='/contact' element={ <Contact /> } />
-            <Route path='/cart' element={ <Cart /> } />
+            <Route path='/login' element={ <Login /> } />
+            <Route path='/register' element={ <Register /> } />
+            <Route path='/reset' element={ <Reset /> } />
+            <Route path='/admin' element={ <Admin /> } />
             <Route path='/orderhistory' element={ <OrderHistory /> } />
+            <Route path='/cart' element={ <Cart /> } />
           </Routes>
         <Footer />
       </BrowserRouter>
