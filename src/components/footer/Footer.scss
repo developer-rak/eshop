@@ -1,3 +1,13 @@
-.footer h1 {
-   background-color: gray;
+.footer {
+   background-color: var(--dark-blue);
+   color: #fff;
+   font-size: 1.6rem;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 8rem;
+
+   p {
+      color: #fff;
+   }
 }
