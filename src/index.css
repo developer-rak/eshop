@@ -290,6 +290,10 @@ p {
 .--btn-block {
   width: 100%;
 }
+.--btn-primary {
+  color: #fff;
+  background: #007bff;
+}
 .--btn-secondary {
   color: #fff;
   border: 1px solid #fff;
