@@ -18,7 +18,8 @@ const Reset = () => {
             <button className="--btn --btn-primary --btn-block">Reset</button>
             <div className="links">
               <p>
-                <Link to="/login">- Login</Link>              </p>
+                <Link to="/login">- Login</Link>              
+              </p>
               <p>
                 <Link to="/register">- Register</Link>
               </p>
