@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import "./Header.scss"
 import "./Header.scss";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
+
+import { auth } from '../../firebase/config';
+import { signOut } from "firebase/auth";
+import { toast, ToastContainer } from 'react-toastify';
+import Loader from '../loader/Loader';
 
 // logo variable
 const logo = (
@@ -34,6 +39,9 @@ const cart = (
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate()
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -43,7 +51,22 @@ const Header = () => {
     setShowMenu(false)
   }
 
+  const logoutUser = (e) => {
+    setIsLoading(true)
+    signOut(auth).then(() => {
+      toast.success("Logout Successfully.")
+      setIsLoading(false)
+      navigate("/");
+    })
+    .catch((error) => {
+      toast.error(error.message)
+    });
+  }
+
   return (
+    <>
+    <ToastContainer />
+    { isLoading && <Loader />}
     <header>
       <div className="header">
        {logo}
@@ -106,6 +129,13 @@ const Header = () => {
             >
               My Orders
             </NavLink>
+            <NavLink
+              to="/" 
+              className={activeLink}
+              onClick={logoutUser}
+            >
+              LogOut
+            </NavLink>
           </span>
           {cart}
         </div>
@@ -118,6 +148,7 @@ const Header = () => {
        </div>
       </div>
     </header>
+    </>
   )
 }
 

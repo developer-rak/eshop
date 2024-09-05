@@ -4,10 +4,15 @@ import './App.scss';
 import { Header, Footer } from "./components";
 import { Admin, Home, Contact, Login, Register, OrderHistory, Cart, Reset } from "./pages";
 
+// Toastify
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ToastContainer />
         <Header />
           <Routes>
             <Route path='/' element={ <Home /> } />
