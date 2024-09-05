@@ -1,12 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./auth.scss";
-import loginImg from "../../assets/login.png";
-import { Link } from 'react-router-dom';
-import { FaGoogle } from 'react-icons/fa';
+
+import { Link, useNavigate } from 'react-router-dom';
 import Card from '../../components/card/Card';
+import loginImg from "../../assets/login.png";
+import { FaGoogle } from 'react-icons/fa';
+
+// Toastify
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { auth } from '../../firebase/config';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import Loader from '../../components/loader/Loader';
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+
+  const loginUser = (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        setIsLoading(false)
+        toast.success("Login Successful...")
+        navigate("/")
+        console.log(user)
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        toast.error("Your account or Password do not match.")
+      });
+  }
+
   return (
+    <>
+    <ToastContainer />
+    { isLoading && <Loader /> }
     <section className="container auth">
       <div className="img">
         <img src={loginImg} alt="LoginImg" width="400" />
@@ -14,10 +51,27 @@ const Login = () => {
       <Card>
         <div className="form">
           <h2>Login</h2>
-          <form>
-            <input type="email" placeholder='Email' required />
-            <input type="password" placeholder='Password' required />
-            <button className="--btn --btn-primary --btn-block">Login</button>
+          <form onSubmit={loginUser}>
+            <input 
+              type="email" 
+              placeholder='Email' 
+              required 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input 
+              type="password" 
+              placeholder='Password' 
+              required 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button 
+              className="--btn --btn-primary --btn-block"
+              type='submit'
+            >
+              Login
+            </button>
             <div className="links">
               <Link to="/reset">Reset Password</Link>
             </div>
@@ -31,6 +85,7 @@ const Login = () => {
         </div>
       </Card>
     </section>
+    </>
   )
 }
 
