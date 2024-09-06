@@ -5,24 +5,33 @@ import resetImg from "../../assets/forgot.png";
 import { Link } from 'react-router-dom';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../firebase/config';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import Loader from '../../components/loader/Loader';
 
 const Reset = () => {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const resetPassword = (e) => {
     e.preventDefault()
+    setIsLoading(true)
 
     sendPasswordResetEmail(auth, email)
       .then(() => {
         toast.success("Check your email for reset link")
+        setIsLoading(false)
       })
       .catch((error) => {
         toast.error(error.message)
+        setIsLoading(false)
       });
     }
 
   return (
+    <>
+    <ToastContainer />
+    { isLoading && <Loader /> }
     <section className="container auth">
       <div className="img">
         <img src={resetImg} alt="LoginImg" width="400" />
@@ -56,6 +65,7 @@ const Reset = () => {
         </div>
       </Card>
     </section>
+    </>
   )
 }
 

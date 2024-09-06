@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Header.scss"
 import "./Header.scss";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
-import { FaShoppingCart, FaTimes } from "react-icons/fa";
+import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 
 import { auth } from '../../firebase/config';
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { toast, ToastContainer } from 'react-toastify';
 import Loader from '../loader/Loader';
 
@@ -40,6 +40,20 @@ const cart = (
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [displayName, setdisplayName] = useState("");
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(user.displayName)
+        setdisplayName(user.displayName)
+      } 
+      else {
+        setdisplayName("")
+      }
+    });
+  },[])
 
   const navigate = useNavigate()
 
@@ -60,6 +74,7 @@ const Header = () => {
     })
     .catch((error) => {
       toast.error(error.message)
+      setIsLoading(false)
     });
   }
 
@@ -117,6 +132,12 @@ const Header = () => {
             >
               Login
             </NavLink>
+            
+            <a href="#" className='userP'>
+              <FaUserCircle size={16} />
+              Hi, {displayName}
+            </a>
+            
             <NavLink 
               to="/register" 
               className={activeLink}
