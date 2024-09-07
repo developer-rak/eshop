@@ -42,6 +42,7 @@ const Header = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [displayName, setdisplayName] = useState("");
 
+  // Monitor currently signedIn user
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
