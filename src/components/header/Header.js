@@ -10,6 +10,8 @@ import { auth } from '../../firebase/config';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { toast, ToastContainer } from 'react-toastify';
 import Loader from '../loader/Loader';
+import { useDispatch } from 'react-redux';
+import { SET_ACTIVE_USER } from '../../redux/slice/authSlice';
 
 // logo variable
 const logo = (
@@ -42,13 +44,20 @@ const Header = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [displayName, setdisplayName] = useState("");
 
+  const dispatch = useDispatch()
+
   // Monitor currently signedIn user
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
-        console.log(user.displayName)
         setdisplayName(user.displayName)
+
+        dispatch(SET_ACTIVE_USER({
+          email: user.email,
+          userName: user.displayName,
+          userID: uid,
+        }))
       } 
       else {
         setdisplayName("")
