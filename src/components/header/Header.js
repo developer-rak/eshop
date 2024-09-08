@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import Loader from '../loader/Loader';
 import { useDispatch } from 'react-redux';
 import { SET_ACTIVE_USER, REMOVE_ACTIVE_USER } from '../../redux/slice/authSlice';
+import ShowOnLogin, { ShowOnLogout } from '../hiddenlink/HiddenLink';
 
 // logo variable
 const logo = (
@@ -141,39 +142,46 @@ const Header = () => {
 
         <div className="header-right" onClick={hideMenu}>
           <span className="links">
-            <NavLink 
-              to="/login" 
-              className={activeLink}
-            >
-              Login
-            </NavLink>
+            <ShowOnLogout>
+              <NavLink 
+                to="/login" 
+                className={activeLink}
+              >
+                Login
+              </NavLink>
+            </ShowOnLogout>
             
             <a href="##" className='userP'>
               <FaUserCircle size={16} />
               Hi, {displayName}
             </a>
-            
-            <NavLink 
-              to="/register" 
-              className={activeLink}
-            >
-              Register
-            </NavLink>
+            <ShowOnLogout>
+              <NavLink 
+                to="/register" 
+                className={activeLink}
+              >
+                Register
+              </NavLink>
+            </ShowOnLogout>
             <NavLink 
               to="/orderhistory"
               className={activeLink}
             >
               My Orders
             </NavLink>
-            <NavLink
-              to="/" 
-              className={activeLink}
-              onClick={logoutUser}
-            >
-              LogOut
-            </NavLink>
           </span>
           {cart}
+          <span className="links">
+            <ShowOnLogin>
+              <NavLink
+                to="/" 
+                className={activeLink}
+                onClick={logoutUser}
+              >
+                LogOut
+              </NavLink>
+            </ShowOnLogin>
+          </span>
         </div>
 
        </nav>
