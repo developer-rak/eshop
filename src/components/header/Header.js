@@ -150,11 +150,11 @@ const Header = () => {
                 Login
               </NavLink>
             </ShowOnLogout>
-            
-            <a href="##" className='userP'>
-              <FaUserCircle size={16} />
-              Hi, {displayName}
-            </a>
+            <ShowOnLogin>
+              <a href="##" className='userProfile' style={{color: "#ff7722"}}>
+                <FaUserCircle size={16} /> Hi, {displayName}
+              </a>
+            </ShowOnLogin>
             <ShowOnLogout>
               <NavLink 
                 to="/register" 
@@ -163,12 +163,14 @@ const Header = () => {
                 Register
               </NavLink>
             </ShowOnLogout>
-            <NavLink 
-              to="/orderhistory"
-              className={activeLink}
-            >
-              My Orders
+            <ShowOnLogin>
+              <NavLink 
+                to="/orderhistory"
+                className={activeLink}
+              >
+                My Orders
             </NavLink>
+            </ShowOnLogin>
           </span>
           {cart}
           <span className="links">
