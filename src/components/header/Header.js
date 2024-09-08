@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import "./Header.scss"
 import "./Header.scss";
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
@@ -11,7 +10,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { toast, ToastContainer } from 'react-toastify';
 import Loader from '../loader/Loader';
 import { useDispatch } from 'react-redux';
-import { SET_ACTIVE_USER } from '../../redux/slice/authSlice';
+import { SET_ACTIVE_USER, REMOVE_ACTIVE_USER } from '../../redux/slice/authSlice';
 
 // logo variable
 const logo = (
@@ -50,20 +49,26 @@ const Header = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        if (user.displayName == null) {
+          const u1 = user.email.substring(0, user.email.indexOf("@"));
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
+          setdisplayName(uName)
+        } else {
+          setdisplayName(user.displayName)
+        }
         const uid = user.uid;
-        setdisplayName(user.displayName)
-
         dispatch(SET_ACTIVE_USER({
           email: user.email,
-          userName: user.displayName,
+          userName: user.displayName ? user.displayName : displayName,
           userID: uid,
         }))
       } 
       else {
-        setdisplayName("")
+        setdisplayName("");
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  },[])
+  }, [dispatch, displayName]);
 
   const navigate = useNavigate()
 
@@ -143,7 +148,7 @@ const Header = () => {
               Login
             </NavLink>
             
-            <a href="#" className='userP'>
+            <a href="##" className='userP'>
               <FaUserCircle size={16} />
               Hi, {displayName}
             </a>

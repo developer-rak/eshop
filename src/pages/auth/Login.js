@@ -28,11 +28,10 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
+        // const user = userCredential.user;
         setIsLoading(false)
         toast.success("Login Successful...")
         navigate("/")
-        console.log(user)
       })
       .catch((error) => {
         setIsLoading(false)
