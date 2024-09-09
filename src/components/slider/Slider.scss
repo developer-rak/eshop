@@ -26,13 +26,14 @@
  
  .slide img {
    height: 100%;
+   object-fit: cover;
  }
  
  .content {
    position: absolute;
    text-align: center;
    top: 23rem;
-   left: 50%;
+   left: 25%;
    opacity: 0;
    width: 50%;
    padding: 3rem;
